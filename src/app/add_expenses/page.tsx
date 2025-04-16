@@ -170,9 +170,9 @@ import { useRouter } from "next/navigation";
 
 export default function UploadForm() {
   const [purchaseName, setName] = useState("");
-  const [spendingCategory0, setSpendingCategory0] = useState(false);
-  const [spendingCategory1, setSpendingCategory1]= useState(false);
-  const[spendingCategory2, setSpendingCategory2] = useState(false); 
+  const [fixedExpense, setFixedExpense] = useState(false);
+  const [personalExpense, setPersonalExpense]= useState(false);
+  const [funExpense, setFunExpense] = useState(false); 
   const [amount, setAmount] = useState(0);
   const [date, setDate] = useState("");
   const [notes, setNotes] = useState("");
@@ -207,13 +207,14 @@ export default function UploadForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     // handleCategoryChange();
     e.preventDefault();
-    const result = await uploadData(purchaseName, spendingCategory0, spendingCategory1, spendingCategory2, amount, date, notes);
+    const result = await uploadData(purchaseName, fixedExpense, personalExpense, funExpense, amount, date, notes);
     console.log(result); // Handle the result as needed
     router.push("/add_expenses"); 
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      <h1>Purchase Name</h1>
       <input
         type="text"
         value={purchaseName}
@@ -221,21 +222,46 @@ export default function UploadForm() {
         placeholder="Name" 
         required
       />
-      <input
-        type="radio"
-        onChange={(e) => setSpendingCategory0(e.target.checked)}
-        name="spending"
-      />
-      <input
-        type="radio"
-        onChange={(e) => setSpendingCategory1(e.target.checked)}
-        name="spending"
-      />
-      <input
-        type="radio"
-        onChange={(e) => setSpendingCategory2(e.target.checked)}
-        name="spending"
-      />
+      <br></br>
+      <br></br>
+      <h1>Spending Category</h1>
+      <div className="mb-[0.125rem] block min-h-[1.5rem] ps-[1.5rem]">
+        <input
+          type="radio"
+          onChange={(e) => setFixedExpense(e.target.checked)}
+          name="spendingCategory"
+          id="Fixed Expenses"
+        />
+        <label
+          className="hover:cursor-pointer"
+          htmlFor="Fixed Expenses">
+           Fixed
+        </label>
+        <br></br>
+        <input
+          type="radio"
+          onChange={(e) => setPersonalExpense(e.target.checked)}
+          name="spendingCategory"
+          id="Home and Personal"
+        />
+        <label
+          className="hover:cursor-pointer"
+          htmlFor="Home and Personal">
+          Home and Personal
+        </label>
+        <br></br>
+        <input
+          type="radio"
+          onChange={(e) => setFunExpense(e.target.checked)}
+          name="spendingCategory"
+          id="Entertainment and Fun"
+        />
+        <label
+          className="hover:cursor-pointer"
+          htmlFor="Entertainment and Fun">
+           Entertainment and Fun
+        </label>
+      </div>
       <input
         type="number"
         value={amount}
@@ -252,9 +278,14 @@ export default function UploadForm() {
         placeholder="Date"
         required
       />
-      <button type="submit">Upload</button>
+      <input
+        type="text"
+        value={notes}
+        onChange={e => setNotes(e.target.value)}
+        placeholder="Notes"
+      />
+      <button className="btn btn-outline btn-success" type="submit">Upload Spending Log</button>
     </form>
   );
-
 
 }
