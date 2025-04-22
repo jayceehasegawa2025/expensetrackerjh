@@ -184,26 +184,6 @@ export default function UploadForm() {
     // Any code that interacts with the browser (e.g., navigation, DOM manipulation) should go here
   }, []); // Empty dependency array ensures it runs only once, after initial render
 
-  // Moved handleCategoryChange to upload.tsx --> function uploads spendingCategory string variable to database now
-  /*  
-  function handleCategoryChange() {
-    console.log("category change run YAY")
-    if(spendingCategory0){
-      setSpendingCategory("fixed expenses");
-      console.log("fixed expenses") 
-    }
-    else if(spendingCategory1){
-      setSpendingCategory("Home and personal")
-      console.log("Home and personal")
-    }
-    else if(spendingCategory2){
-      setSpendingCategory("Entertainment/Fun")
-      console.log("entertainment fun")
-    }
-    console.log(spendingCategory);
-  };
-  */
-
   const handleSubmit = async (e: React.FormEvent) => {
     // handleCategoryChange();
     e.preventDefault();
@@ -214,9 +194,10 @@ export default function UploadForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h1>Purchase Name</h1>
+      <h1>Purchase Name *</h1>
       <input
         type="text"
+        className="input input-sm input-primary"
         value={purchaseName}
         onChange={(e) => setName(e.target.value)}
         placeholder="Name" 
@@ -224,7 +205,7 @@ export default function UploadForm() {
       />
       <br></br>
       <br></br>
-      <h1>Spending Category</h1>
+      <h1>Spending Category *</h1>
       <div className="mb-[0.125rem] block min-h-[1.5rem] ps-[1.5rem]">
         <input
           type="radio"
@@ -262,6 +243,8 @@ export default function UploadForm() {
            Entertainment and Fun
         </label>
       </div>
+      <br></br>
+      <h1>Amount *</h1>
       <input
         type="number"
         value={amount}
@@ -271,19 +254,29 @@ export default function UploadForm() {
         placeholder="Amount"
         required
       />
+      <br></br>
+      <br></br>
+      <h1>Purchase Date *</h1>
       <input
+        className="outline-solid"
         type="date"
         value={date}
         onChange={e => setDate(e.target.value)}
-        placeholder="Date"
         required
       />
+      <br></br>
+      <br></br>
+      <h1>Notes</h1>
       <input
-        type="text"
+        type="textarea"
+        className="textarea"
         value={notes}
         onChange={e => setNotes(e.target.value)}
-        placeholder="Notes"
+        placeholder="Enter additional notes here"
       />
+      <br></br>
+      <br></br>
+      <button className="outline-2 outline-offset-2 outline-solid" type="submit">test test</button>
       <button className="btn btn-outline btn-success" type="submit">Upload Spending Log</button>
     </form>
   );
