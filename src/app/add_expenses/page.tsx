@@ -167,6 +167,7 @@ export default function HomePage() {
 import { useState, useEffect } from "react";
 import uploadData from "src/app/api/upload-expenses/upload";
 import { useRouter } from "next/navigation";
+import { auth } from '@clerk/nextjs/server'
 
 export default function UploadForm() {
   const [purchaseName, setName] = useState("");
@@ -178,11 +179,11 @@ export default function UploadForm() {
   const [notes, setNotes] = useState("");
   const router = useRouter();
 
-
   useEffect(() => {
     // This hook will run after the component is mounted on the client side
     // Any code that interacts with the browser (e.g., navigation, DOM manipulation) should go here
   }, []); // Empty dependency array ensures it runs only once, after initial render
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     // handleCategoryChange();
@@ -197,7 +198,6 @@ export default function UploadForm() {
       <h1>Purchase Name *</h1>
       <input
         type="text"
-        className="input input-sm input-primary"
         value={purchaseName}
         onChange={(e) => setName(e.target.value)}
         placeholder="Name" 
@@ -268,15 +268,12 @@ export default function UploadForm() {
       <br></br>
       <h1>Notes</h1>
       <input
-        type="textarea"
-        className="textarea"
         value={notes}
         onChange={e => setNotes(e.target.value)}
         placeholder="Enter additional notes here"
       />
       <br></br>
       <br></br>
-      <button className="outline-2 outline-offset-2 outline-solid" type="submit">test test</button>
       <button className="btn btn-outline btn-success" type="submit">Upload Spending Log</button>
     </form>
   );

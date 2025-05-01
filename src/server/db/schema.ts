@@ -19,29 +19,30 @@ import {
  */
 export const createTable = pgTableCreator((name) => `expensetrackerjh_${name}`);
 
-export const images = createTable(
-  "image",
-  {
-    id: serial("id").primaryKey(),
-    name: varchar("name", { length: 256 }).notNull(),
-    url: varchar("url", {length:1024}).notNull(),
-    userId: varchar("userId", {length:256}).notNull(),
-    createdAt: timestamp("created_at", { withTimezone: true })
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
-      () => new Date()
-    ),
-  },
-  (example) => ({
-    nameIndex: index("name_idx").on(example.name),
-  })
-);
+// export const images = createTable(
+//   "image",
+//   {
+//     id: serial("id").primaryKey(),
+//     name: varchar("name", { length: 256 }).notNull(),
+//     url: varchar("url", {length:1024}).notNull(),
+//     userId: varchar("userId", {length:256}).notNull(),
+//     createdAt: timestamp("created_at", { withTimezone: true })
+//       .default(sql`CURRENT_TIMESTAMP`)
+//       .notNull(),
+//     updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
+//       () => new Date()
+//     ),
+//   },
+//   (example) => ({
+//     nameIndex: index("name_idx").on(example.name),
+//   })
+// );
 
 export const posts = createTable(
   "post",
   {
     id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+    userId: varchar("userId", {length:256}),
     purchaseName: varchar("purchaseName", { length: 256 }),
     spendingCategory: varchar("SpendingCategory", { length: 256}),
     amount: integer("amount"),

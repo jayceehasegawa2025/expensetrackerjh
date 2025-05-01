@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 
 import { ExpenseButton, HomeButton, SpendingButton } from "./MyButton";
+import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -11,22 +12,30 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-//
-//
-// working on changing theme (primary color) to add border outlines to text inputs
-
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-theme="lemonade" className={`${GeistSans.variable}`}>
+    <html lang="en" className={`${GeistSans.variable}`}>
       <body>
         <ul className="menu menu-horizontal bg-lime-400/50 flex">
-          <li><HomeButton></HomeButton></li>
-          <li><ExpenseButton></ExpenseButton></li>
-          <li><SpendingButton></SpendingButton></li>
+        <li>
+            <ClerkProvider>
+              <header>
+                <SignedOut>
+                  <SignInButton />
+                </SignedOut>
+                <SignedIn>
+                  <li><UserButton></UserButton></li>
+                  <li><HomeButton></HomeButton></li>
+                  <li><ExpenseButton></ExpenseButton></li>
+                  <li><SpendingButton></SpendingButton></li>
+                </SignedIn>
+              </header>
+            </ClerkProvider>
+        </li>
         </ul>
-      {children}
+          <main>{children}</main>
       </body>
     </html>
   );
