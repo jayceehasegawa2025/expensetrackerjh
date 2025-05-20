@@ -1,9 +1,15 @@
 import { getData } from "src/server/queries"
+import { auth } from "@clerk/nextjs/server";
+
 
 export default async function Page (){
     const spendingData = await getData();
 
-    return (        
-        <h1>Expense summary</h1>
+    return (
+        spendingData?.map((data) => (
+            <div key={data.id}>
+                <h1>{data.purchaseName}</h1>
+            </div>
+        ))
     );
 }
